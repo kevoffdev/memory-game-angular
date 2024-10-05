@@ -10,4 +10,7 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
 	title = 'memory-game';
 	fer = 1;
+	constructor() {
+		console.log('probando AppComponent');
+	}
 }
