@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-const x = 1;
 @Component({
 	selector: 'app-root',
 	standalone: true,
