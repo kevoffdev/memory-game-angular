@@ -1,0 +1,18 @@
+<div class="container">
+	<section class="board">
+		@for (card of deckService.getDeck(); track card) {
+			<button (click)="cardAction(card)">
+				<article class="card">
+					@if (card.isFleep) {
+						<img class="card__image" [src]="card.image" [alt]="card.name" />
+					} @else {
+						<img class="card__image" src="/assets/portrait.jpg" alt="image" />
+					}
+				</article>
+			</button>
+		}
+	</section>
+	<section class="quote">
+		<app-quote></app-quote>
+	</section>
+</div>

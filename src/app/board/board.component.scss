@@ -1,0 +1,32 @@
+.container {
+	.board {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.5rem;
+		button {
+			cursor: pointer;
+			background-color: rgb(121, 94, 94);
+			border: none;
+			border-radius: 0.2rem;
+
+			.card {
+				border-radius: 0.2rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				&__image {
+					padding: 0.5rem 0;
+					height: 75px;
+					object-fit: contain;
+					width: 100%;
+				}
+			}
+		}
+	}
+	.quote {
+		display: flex;
+		justify-content: center;
+		margin: 0.5rem 0;
+		opacity: 0.8;
+	}
+}

@@ -1,0 +1,24 @@
+div {
+	margin: 0;
+	height: 100vh;
+	.container {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		max-width: 580px;
+		margin: auto;
+		min-height: 100vh;
+
+		.header {
+			&__title {
+				text-align: center;
+				line-height: 2.5rem;
+			}
+		}
+
+		&__footer {
+			line-height: 4rem;
+			text-align: center;
+			opacity: 0.4;
+		}
+	}
+}
