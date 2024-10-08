@@ -8,4 +8,8 @@ export class CardService {
 	flipCard(card: ICard) {
 		card.isFleep = !card.isFleep;
 	}
+
+	setPaired(card: ICard) {
+		card.isPaired = true;
+	}
 }

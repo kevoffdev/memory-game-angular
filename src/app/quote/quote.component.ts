@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Quote } from '../services/get-quote.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IQuote } from '../services/get-quote.service';
+import { GameService } from '../services/game.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-quote',
@@ -8,11 +10,30 @@ import { Quote } from '../services/get-quote.service';
 	templateUrl: './quote.component.html',
 	styleUrl: './quote.component.scss'
 })
-export class QuoteComponent {
-	// quote: Quote = {
-	// 	id: 1,
-	// 	quote: '',
-	// 	character: ''
-	// };
-	quote: Quote | null = null;
+export class QuoteComponent implements OnInit, OnDestroy {
+	constructor(private gameService: GameService) {}
+
+	private suscriptions = new Subscription();
+
+	quote: IQuote | false = false;
+
+	ngOnInit(): void {
+		this.suscriptions.add(
+			this.gameService.card$.subscribe((card) => {
+				if (!card) {
+					this.quote = false;
+					return;
+				}
+				this.quote = {
+					id: card.id,
+					character: card.name,
+					quote: card.description
+				};
+			})
+		);
+	}
+
+	ngOnDestroy(): void {
+		this.suscriptions.unsubscribe();
+	}
 }

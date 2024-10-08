@@ -1,7 +1,17 @@
+@if (isTimerFinished && !isWin) {
+	<div class="message-finished">
+		<p>Perdiste 😔, termino el tiempo de juego</p>
+	</div>
+}
+
+<app-message></app-message>
 <div class="container">
+	<app-timer></app-timer>
 	<section class="board">
 		@for (card of deckService.getDeck(); track card) {
-			<button (click)="cardAction(card)">
+			<button
+				(click)="!isTimerFinished && cardAction(card)"
+				[style]="card.isPaired ? 'background-color:rgb(161, 209, 89)' : ''">
 				<article class="card">
 					@if (card.isFleep) {
 						<img class="card__image" [src]="card.image" [alt]="card.name" />

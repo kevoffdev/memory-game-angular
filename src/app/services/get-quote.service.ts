@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export interface Quote {
+export interface IQuote {
 	id: number;
 	character: string;
 	quote: string;
