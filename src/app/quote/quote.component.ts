@@ -1,14 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IQuote } from '../services/get-quote.service';
-import { GameService } from '../services/game.service';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { GameService } from "../services/game.service";
+import { Subscription } from "rxjs";
+
+interface IQuote {
+	id: number;
+	character: string;
+	quote: string;
+}
 
 @Component({
-	selector: 'app-quote',
+	selector: "app-quote",
 	standalone: true,
 	imports: [],
-	templateUrl: './quote.component.html',
-	styleUrl: './quote.component.scss'
+	templateUrl: "./quote.component.html",
+	styleUrl: "./quote.component.scss",
 })
 export class QuoteComponent implements OnInit, OnDestroy {
 	constructor(private gameService: GameService) {}
@@ -27,7 +32,7 @@ export class QuoteComponent implements OnInit, OnDestroy {
 				this.quote = {
 					id: card.id,
 					character: card.name,
-					quote: card.description
+					quote: card.description,
 				};
 			})
 		);

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ICard } from '../models/card.model';
+import { Injectable } from "@angular/core";
+import { ICard } from "../models/card.model";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class CardService {
 	flipCard(card: ICard) {

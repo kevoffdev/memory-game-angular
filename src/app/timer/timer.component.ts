@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { GameService } from '../services/game.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { GameService } from "../services/game.service";
+import { Subscription } from "rxjs";
 
 @Component({
-	selector: 'app-timer',
+	selector: "app-timer",
 	standalone: true,
 	imports: [],
-	templateUrl: './timer.component.html',
-	styleUrl: './timer.component.scss'
+	templateUrl: "./timer.component.html",
+	styleUrl: "./timer.component.scss",
 })
 export class TimerComponent implements OnInit {
 	private suscriptions = new Subscription();
+	private suscriptionTimer = new Subscription();
+
 	isWin = false;
-	timer = 60;
+	timer!: number;
 	intervalId!: ReturnType<typeof setInterval>;
 
-	constructor(public gameService: GameService) {}
+	constructor(private gameService: GameService) {}
 
 	ngOnInit() {
-		this.startTimer();
+		this.suscriptionTimer.add(
+			this.gameService.timer$.subscribe((timer) => {
+				this.timer = timer;
+				this.startTimer();
+			})
+		);
 		this.suscriptions.add(
 			this.gameService.isWon$.subscribe((isWon) => {
 				if (isWon) {

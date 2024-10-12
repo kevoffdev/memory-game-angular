@@ -1,21 +1,25 @@
-import { Injectable } from '@angular/core';
-import { ICard } from '../models/card.model';
-import { CardService } from './card.service';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { DeckService } from './deck.service';
-import { ConfettiService } from './conffeti.service';
+import { Injectable } from "@angular/core";
+import { ICard } from "../models/card.model";
+import { CardService } from "./card.service";
+import { BehaviorSubject, Subject } from "rxjs";
+import { DeckService } from "./deck.service";
+import { ConfettiService } from "./conffeti.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class GameService {
+	timerDefault = 60;
+
 	private cardSource = new BehaviorSubject<ICard | false>(false);
 	private isWonSource = new BehaviorSubject<boolean>(false);
 	private timerFinishedSource = new Subject<void>();
+	private timerSource = new BehaviorSubject(this.timerDefault);
 
 	isWon$ = this.isWonSource.asObservable();
 	card$ = this.cardSource.asObservable();
 	timerFinished$ = this.timerFinishedSource.asObservable();
+	timer$ = this.timerSource.asObservable();
 
 	private firstCard: ICard | null = null;
 	private secondCard: ICard | null = null;
@@ -75,5 +79,15 @@ export class GameService {
 
 	notifyTimerFinished() {
 		this.timerFinishedSource.next();
+	}
+
+	reloadGame() {
+		this.deckService.reloadDeck(this.deckService.getDeck());
+		this.isWonSource.next(false);
+		this.cardSource.next(false);
+		this.timerSource.next(this.timerDefault);
+		this.firstCard = null;
+		this.secondCard = null;
+		this.blockSelection = false;
 	}
 }

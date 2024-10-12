@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import JSConfetti from 'js-confetti';
+import { Injectable } from "@angular/core";
+import JSConfetti from "js-confetti";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class ConfettiService {
 	private jsConfetti = new JSConfetti();
 
 	addConfetti() {
 		this.jsConfetti.addConfetti({
-			emojis: ['🦆', '⚡️', '📙', '🧡', '💫', '🌸'],
+			emojis: ["🦆", "⚡️", "📙", "🧡", "💫", "🌸"],
 			confettiRadius: 1,
-			confettiNumber: 500
+			confettiNumber: 500,
 		});
 	}
 

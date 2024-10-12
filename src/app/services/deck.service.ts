@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ICard, ICards } from '../models/card.model';
-import { ApiService } from './api.service';
-import { map, Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { ICard, ICards } from "../models/card.model";
+import { ApiService } from "./api.service";
+import { map, Observable } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class DeckService {
 	cards: ICard[] = [];
@@ -17,7 +17,7 @@ export class DeckService {
 	prepareDeck() {
 		this.generateDeck().subscribe({
 			next: (deck) => this.mixDeck(deck.items),
-			error: (error) => console.error(error)
+			error: (error) => console.error(error),
 		});
 	}
 	private generateDeck(): Observable<ICards> {
@@ -26,9 +26,14 @@ export class DeckService {
 				return {
 					items: val.items.concat(
 						val.items.map((item) => {
-							return { ...item, id: item.id + 10, isFleep: false, isPaired: false };
+							return {
+								...item,
+								id: item.id + 10,
+								isFleep: false,
+								isPaired: false,
+							};
 						})
-					)
+					),
 				};
 			})
 		);
@@ -36,5 +41,10 @@ export class DeckService {
 
 	private mixDeck(deck: ICard[]) {
 		this.cards = deck.sort(() => (Math.random() >= 0.5 ? 1 : -1));
+	}
+
+	reloadDeck(deck: ICard[]) {
+		const newDeck = deck.map((card) => ({ ...card, isFleep: false, isPaired: false }));
+		this.mixDeck(newDeck);
 	}
 }
