@@ -3,15 +3,13 @@ div {
 	height: 100vh;
 	.container {
 		display: grid;
-		grid-template-rows: auto 1fr auto;
-		max-width: 580px;
+		max-width: 720px;
 		margin: auto;
 		min-height: 100vh;
-
 		.header {
+			margin-top: 1rem;
 			&__title {
 				text-align: center;
-				line-height: 2.5rem;
 				color: rgb(245, 167, 22);
 			}
 		}
