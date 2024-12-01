@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { ICard, ICards } from "../models/card.model";
 import { ApiService } from "./api.service";
 import { map, Observable } from "rxjs";
@@ -8,8 +8,7 @@ import { map, Observable } from "rxjs";
 })
 export class DeckService {
 	cards: ICard[] = [];
-
-	constructor(private readonly apiService: ApiService) {}
+	private readonly apiService = inject(ApiService);
 
 	getDeck() {
 		return this.cards;

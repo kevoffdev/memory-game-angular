@@ -14,12 +14,11 @@ export class GameService {
 	private cardSource = new BehaviorSubject<ICard | false>(false);
 	private isWonSource = new BehaviorSubject<boolean>(false);
 	private timerFinishedSource = new Subject<void>();
-	private timerSource = new BehaviorSubject(this.timerDefault);
+	timerSource = new BehaviorSubject(this.timerDefault);
 
 	isWon$ = this.isWonSource.asObservable();
 	card$ = this.cardSource.asObservable();
 	timerFinished$ = this.timerFinishedSource.asObservable();
-	timer$ = this.timerSource.asObservable();
 
 	private firstCard: ICard | null = null;
 	private secondCard: ICard | null = null;
