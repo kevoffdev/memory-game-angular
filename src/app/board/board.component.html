@@ -1,29 +1,38 @@
 @if (isTimerFinished && !isWin) {
 	<div class="message-finished">
-		<p>Perdiste 😔, termino el tiempo de juego</p>
+		<p>You lost 😔, game time is over.</p>
 	</div>
-	<button class="button--reload" (click)="reloadBoard()">Reiniciar</button>
+	<button class="button--reload" (click)="reloadBoard()">Reset Game</button>
 }
 
-<app-message></app-message>
+@if (isWin) {
+	<div>
+		<button class="button--reload" (click)="reloadBoard()">Play again</button>
+		<app-message></app-message>
+	</div>
+}
+
 <div class="container">
 	<app-timer></app-timer>
 	<section class="board">
 		@for (card of deckService.getDeck(); track card) {
 			<button
 				(click)="!isTimerFinished && cardAction(card)"
-				[style]="card.isPaired ? 'background-color:rgb(161, 209, 89)' : ''">
+				[style]="card.isPaired ? 'background-color:rgb(255, 106, 0)' : ''">
 				<article class="card">
 					@if (card.isFleep) {
-						<img class="card__image" [src]="card.image" [alt]="card.name" />
+						<img
+							class="card__image card__image--transition"
+							[src]="card.image"
+							[alt]="card.name" />
 					} @else {
-						<img class="card__image" src="/assets/portrait.jpg" alt="image" />
+						<img
+							class="card__image card__image--transition"
+							src="/assets/fondodbz.webp"
+							alt="image" />
 					}
 				</article>
 			</button>
 		}
-	</section>
-	<section class="quote">
-		<app-quote></app-quote>
 	</section>
 </div>
