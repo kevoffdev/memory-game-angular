@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MessageComponent } from "../message/message.component";
 import { ICard } from "../models/card.model";
-import { QuoteComponent } from "../quote/quote.component";
 import { DeckService } from "../services/deck.service";
 import { GameService } from "../services/game.service";
 import { TimerComponent } from "../timer/timer.component";
@@ -10,7 +9,7 @@ import { TimerComponent } from "../timer/timer.component";
 @Component({
 	selector: "app-board",
 	standalone: true,
-	imports: [QuoteComponent, TimerComponent, MessageComponent],
+	imports: [TimerComponent, MessageComponent],
 	templateUrl: "./board.component.html",
 	styleUrl: "./board.component.scss",
 })
@@ -20,21 +19,18 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 	isTimerFinished = false;
 	isWin = false;
-
-	constructor(
-		public deckService: DeckService,
-		public gameService: GameService
-	) {}
+	public readonly deckService = inject(DeckService);
+	private readonly _gameService = inject(GameService);
 
 	ngOnInit(): void {
 		this.initializeGame();
 		this.suscribeTimer.add(
-			this.gameService.timerFinished$.subscribe(() => {
+			this._gameService.timerFinished$.subscribe(() => {
 				this.isTimerFinished = true;
 			})
 		);
 		this.suscriptions.add(
-			this.gameService.isWon$.subscribe((isWon) => {
+			this._gameService.isWon$.subscribe((isWon) => {
 				this.isWin = isWon;
 			})
 		);
@@ -49,7 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 	cardAction(card: ICard) {
 		if (card.isFleep) return;
-		this.gameService.cardAction(card);
+		this._gameService.cardAction(card);
 	}
 
 	initializeGame() {
@@ -59,6 +55,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 	reloadBoard() {
 		this.isTimerFinished = false;
 		this.isWin = false;
-		this.gameService.reloadGame();
+		this._gameService.reloadGame();
 	}
 }
