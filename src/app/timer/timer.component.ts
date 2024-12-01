@@ -21,11 +21,14 @@ export class TimerComponent implements OnInit {
 
 	ngOnInit() {
 		this.suscriptionTimer.add(
-			this.gameService.timer$.subscribe((timer) => {
-				this.timer = timer;
-				this.startTimer();
+			this.gameService.timerSource.subscribe({
+				next: (time) => {
+					this.timer = time;
+					this.startTimer();
+				},
 			})
 		);
+
 		this.suscriptions.add(
 			this.gameService.isWon$.subscribe((isWon) => {
 				if (isWon) {
